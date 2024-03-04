@@ -168,6 +168,18 @@ public class TokenizerTest {
 
         if (error != null) {
             error += "\nExpected:\nSize = " + expected.size() + "\n";
+            error = "Actual list of Tokens are not expected.";
+        } else {
+            for (int index = 0; index < expected.size(); index++) {
+                if (!expected.get(index).equals(actual.get(index))) {
+                    error = "Diff found at index = " + index + ".";
+                    break;
+                }
+            }
+        }
+
+        if (error != null) {
+            error += "\nExpected:\nSize = " + expected.size() + "\n";
             for(Token token : expected) {
                 String tokenTypeName = token.type.name();
                 error += (tokenTypeName + "\n");
