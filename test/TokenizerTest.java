@@ -74,7 +74,7 @@ public class TokenizerTest {
 
     @Test
     public void TestViewExpression() {
-        String test = "View 3 + 5";
+        String test = "view 3 + 5";
         List<Token> expected = new ArrayList<Token>();
         expected.add(new Token(TokenType.VIEW));
         expected.add(new Token(TokenType.NUM, 3));
