@@ -13,12 +13,10 @@ import com.chen.mint.Tokenizer;
 
 public class TokenizerTest {
     @Test
-    public void TestBasicSimple() {
-        String test = "let x = 3";
+    public void TestViewSimple() {
+        String test = "view 3";
         List<Token> expected = new ArrayList<Token>();
-        expected.add(new Token(TokenType.LET));
-        expected.add(new Token(TokenType.VAR, "x"));
-        expected.add(new Token(TokenType.EQUAL));
+        expected.add(new Token(TokenType.VIEW));
         expected.add(new Token(TokenType.NUM, 3));
         String error = assertTokenizer(test, expected);
         if (error != null) {
