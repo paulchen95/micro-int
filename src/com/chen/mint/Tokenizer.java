@@ -71,6 +71,9 @@ public class Tokenizer {
                 tokenized.add(new Token(TokenType.STAR));
                 i += 1;
             }
+            else{
+                i++;
+            }
 
         }
         return tokenized;
