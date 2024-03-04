@@ -2,6 +2,7 @@ package com.chen.mint;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.List;
 import java.util.Scanner;
 
 public class Mint {
@@ -14,7 +15,11 @@ public class Mint {
 			Scanner scanner = new Scanner(new File(filename));
 
 			while (scanner.hasNextLine()) {
-				System.out.println(scanner.nextLine());
+                String nextLine = scanner.nextLine();
+                System.out.println(nextLine);
+				List<Token> tokens = Tokenizer.tokenize(nextLine);
+                Node node = Parser.parse(tokens);
+                Executor.execute(node);
 			}
 
 			scanner.close();
