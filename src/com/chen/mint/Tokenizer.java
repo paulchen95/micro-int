@@ -73,6 +73,6 @@ public class Tokenizer {
             }
 
         }
-        return new ArrayList<Token>();
+        return tokenized;
     }
 }
