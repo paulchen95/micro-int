@@ -2,7 +2,6 @@ package com.chen.mint;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class Tokenizer {
     public static boolean check(String s) {                         // Checks if string is made up of letters
@@ -48,7 +47,7 @@ public class Tokenizer {
                     numbers += line.substring(i,i+1);
                     i++;
                 }
-                int num = Integer.parseInt(numbers)                  
+                int num = Integer.parseInt(numbers);                  
                 tokenized.add(new Token(TokenType.VAR, num));
             }
 
