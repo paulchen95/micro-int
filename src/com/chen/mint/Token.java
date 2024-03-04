@@ -1,9 +1,9 @@
 package com.chen.mint;
 
 public class Token {
-    TokenType type;
-    int number;
-    String name;
+    public TokenType type;
+    public int number;
+    public String name;
 
     public Token(TokenType type) {
         this.type = type;

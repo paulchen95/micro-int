@@ -11,9 +11,7 @@ public class Mint {
      */
     public static void main(String[] args) {
         String filename = args[0];
-        try {
-			Scanner scanner = new Scanner(new File(filename));
-
+        try(Scanner scanner = new Scanner(new File(filename))) {
 			while (scanner.hasNextLine()) {
                 String nextLine = scanner.nextLine();
                 System.out.println(nextLine);
@@ -21,8 +19,6 @@ public class Mint {
                 Node node = Parser.parse(tokens);
                 Executor.execute(node);
 			}
-
-			scanner.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}

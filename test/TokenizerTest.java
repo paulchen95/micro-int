@@ -1,5 +1,8 @@
 package test;
 
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,11 +23,30 @@ public class TokenizerTest {
         expected.add(new Token(TokenType.NUM, 3));
         expected.add(new Token(TokenType.PLUS));
         expected.add(new Token(TokenType.NUM, 5));
+        String error = assertTokenizer(test, expected);
+        if (error != null) {
+            assertTrue(error, false);
+        }
     }
 
     String assertTokenizer(String test, List<Token> expected) {
+        String error = null;
         List<Token> actual = Tokenizer.tokenize(test);
-        return null;
+        if (actual.size() != expected.size()) {
+            error = "Actual list of Tokens are not expected.\nExpected:\n";
+            error += "Size = " + expected.size() + "\n";
+            for(Token token : expected) {
+                String tokenTypeName = token.type.name();
+                error += (tokenTypeName + "\n");
+            }
+            error += "\nActual:\n";
+            error += "Size = " + actual.size() + "\n";
+            for(Token token : actual) {
+                String tokenTypeName = token.type.name();
+                error += (tokenTypeName + "\n");
+            }
+        }
+        return error;
     }
 
 }
