@@ -21,15 +21,6 @@ public class Tokenizer {
                 tokenized.add(new Token(TokenType.VIEW));
                 i += 4;
             }
-            // Var
-            else if(Character.isLetter(line.charAt(i))){                                              
-                String letters = "";
-                while(i < line.length() && Character.isLetter(line.charAt(i))){
-                    letters += line.substring(i,i+1);
-                    i++;
-                }                  
-                tokenized.add(new Token(TokenType.VAR, letters));
-            }
             // Num
             else if(Character.isDigit(line.charAt(i))){                          
                 String numbers = "";    
@@ -38,7 +29,16 @@ public class Tokenizer {
                     i++;
                 }
                 int num = Integer.parseInt(numbers);                  
-                tokenized.add(new Token(TokenType.VAR, num));
+                tokenized.add(new Token(TokenType.NUM, num));
+            }
+            // Var
+            else if(Character.isLetter(line.charAt(i))){                                              
+                String letters = "";
+                while(i < line.length() && Character.isLetter(line.charAt(i))){
+                    letters += line.substring(i,i+1);
+                    i++;
+                }                  
+                tokenized.add(new Token(TokenType.VAR, letters));
             }
             // Equal
             else if(line.substring(i,i+1).equals("=")){              
