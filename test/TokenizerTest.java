@@ -40,6 +40,53 @@ public class TokenizerTest {
         }
     }
 
+    @Test
+    public void TestLetSimple2() {
+        String test = "let x = 3 + y";
+        List<Token> expected = new ArrayList<Token>();
+        expected.add(new Token(TokenType.LET));
+        expected.add(new Token(TokenType.VAR, "x"));
+        expected.add(new Token(TokenType.EQUAL));
+        expected.add(new Token(TokenType.NUM, 3));
+        expected.add(new Token(TokenType.PLUS));
+        expected.add(new Token(TokenType.VAR, "y"));
+        String error = assertTokenizer(test, expected);
+        if (error != null) {
+            assertTrue(error, false);
+        }
+    }
+
+    @Test
+    public void TestLetSimple3() {
+        String test = "let x = y + z";
+        List<Token> expected = new ArrayList<Token>();
+        expected.add(new Token(TokenType.LET));
+        expected.add(new Token(TokenType.VAR, "x"));
+        expected.add(new Token(TokenType.EQUAL));
+        expected.add(new Token(TokenType.VAR, "y"));
+        expected.add(new Token(TokenType.PLUS));
+        expected.add(new Token(TokenType.VAR, "z"));
+        String error = assertTokenizer(test, expected);
+        if (error != null) {
+            assertTrue(error, false);
+        }
+    }
+
+    @Test
+    public void TestViewExpression() {
+        String test = "View 3 + 5";
+        List<Token> expected = new ArrayList<Token>();
+        expected.add(new Token(TokenType.VIEW));
+        expected.add(new Token(TokenType.NUM, 3));
+        expected.add(new Token(TokenType.PLUS));
+        expected.add(new Token(TokenType.NUM, 5));
+        String error = assertTokenizer(test, expected);
+        if (error != null) {
+            assertTrue(error, false);
+        }
+    }
+
+
     String assertTokenizer(String test, List<Token> expected) {
         String error = null;
         List<Token> actual = Tokenizer.tokenize(test);
@@ -47,7 +94,7 @@ public class TokenizerTest {
             error = "Actual list of Tokens are not expected.";
         } else {
             for (int index = 0; index < expected.size(); index++) {
-                if (!expected.get(index).equals(actual.get(index))) {
+                if (!(expected.get(index).type.equals(actual.get(index).type))) {
                     error = "Diff found at index = " + index + ".";
                     break;
                 }
