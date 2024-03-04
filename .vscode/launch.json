@@ -9,19 +9,7 @@
             "name": "Mint",
             "request": "launch",
             "mainClass": "com.chen.mint.Mint",
-            "args": [
-                "${workspaceFolder}/programs/sample1.txt"
-            ],
-            "projectName": "micro-int_6830dc85"
-        },
-        {
-            "type": "java",
-            "name": "Mint",
-            "request": "launch",
-            "mainClass": "com.chen.mint.Mint",
-            "args": [
-                "${workspaceFolder}/programs/sample1.txt"
-            ],
+            "args": ["${workspaceFolder}/programs/sample1.txt"],
             "projectName": "micro-int_6517f647"
         },
         {
