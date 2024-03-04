@@ -4,72 +4,70 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Tokenizer {
-    public static boolean check(String s) {                         // Checks if string is made up of letters
-        if (s == null){
-           return false;
-        }
-        int len = s.length();
-        for(int i = 0; i < len; i++) {
-           if ((Character.isLetter(s.charAt(i)) == false)) {
-              return false;
-           }
-        }
-        return true;
-     }
 
-
-    public static List<Token> tokenize(String line) {               // One line
+    public static List<Token> tokenize(String line) {
         ArrayList<Token> tokenized = new ArrayList<Token>();
 
         int i = 0;
         while(i < line.length()){
-            //char current = line.charAt(i);
-            if(line.substring(i,i+3) == "let"){                     // Let Token
+
+            // Let 
+            if(i+3 < line.length() && line.substring(i,i+3).equals("let")){                     
                 tokenized.add(new Token(TokenType.LET));
                 i += 3;
             }
-            else if(line.substring(i,i+4) == "view"){               // View Token
+            // View
+            else if(i+4 < line.length() && line.substring(i,i+4).equals("view")){             
                 tokenized.add(new Token(TokenType.VIEW));
                 i += 4;
             }
-            else if(check(line.substring(i,i+1))){                  // Var Token
+            // Var
+            else if(Character.isLetter(line.charAt(i))){                                              
                 String letters = "";
-                while(check(line.substring(i,i+1))){
+                while(i < line.length() && Character.isLetter(line.charAt(i))){
                     letters += line.substring(i,i+1);
                     i++;
                 }                  
                 tokenized.add(new Token(TokenType.VAR, letters));
             }
-
-            else if(Character.isDigit(line.charAt(i))){              // Num Token
-                String numbers = "";
-                while(Character.isDigit(line.charAt(i))){
-                    numbers += line.substring(i,i+1);
+            // Num
+            else if(Character.isDigit(line.charAt(i))){                          
+                String numbers = "";    
+                while(i < line.length() && Character.isDigit(line.charAt(i))){
+                    numbers += line.charAt(i);
                     i++;
                 }
                 int num = Integer.parseInt(numbers);                  
                 tokenized.add(new Token(TokenType.VAR, num));
             }
-
-            else if(line.substring(i,i+1) == "="){                  // Equal Token
+            // Equal
+            else if(line.substring(i,i+1).equals("=")){              
                 tokenized.add(new Token(TokenType.EQUAL));
                 i += 1;
             }
-            else if(line.substring(i,i+1) == "("){                  // Left Token
+            // Left Paran
+            else if(line.substring(i,i+1).equals("(")){           
                 tokenized.add(new Token(TokenType.LEFT_PARAN));
                 i += 1;
             }
-            else if(line.substring(i,i+1) == ")"){                  // Right Token
+            // Right Paran
+            else if(line.substring(i,i+1).equals(")")){          
                 tokenized.add(new Token(TokenType.RIGHT_PARAN));
                 i += 1;
             }
-            else if(line.substring(i,i+1) == "+"){                  // Plus Token
+            // Plus
+            else if(line.substring(i,i+1).equals("+")){          
                 tokenized.add(new Token(TokenType.PLUS));
                 i += 1;
             }
-            else if(line.substring(i,i+1) == "*"){                  // Star Token
+            // Star
+            else if(line.substring(i,i+1).equals("*")){     
                 tokenized.add(new Token(TokenType.STAR));
                 i += 1;
+            }
+            // Space
+            else{
+                i++;
             }
 
         }
