@@ -5,5 +5,6 @@ public enum NodeType {
     EXP,
     VIEW,
     OP,
-    VAR
+    VAR,
+    NUM
 }

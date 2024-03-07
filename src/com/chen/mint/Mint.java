@@ -5,6 +5,8 @@ import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.Scanner;
 
+import com.chen.mint.Nodes.Node;
+
 public class Mint {
     /**
      * @param args
