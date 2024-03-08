@@ -47,7 +47,7 @@ public class ParserTest {
         Node num = exp.left;
         Assert.assertNull("root->left->left->left must be null", num.left);
         Assert.assertNull("root->left->left->right must be null", num.right);
-        Assert.assertTrue("root->left->left must be ExpNode", (num instanceof ExpNode));
+        Assert.assertTrue("root->left->left must be NumNode", (num instanceof NumNode));
         Assert.assertEquals("root->left->left->num must be 3", 3, num.num);
         Assert.assertNull("root->left->left->varName must be null", num.varName);
     }
@@ -89,7 +89,7 @@ public class ParserTest {
         Assert.assertTrue("let->right must be ExpNode", (exp instanceof ExpNode));
         Assert.assertEquals("let->right->num must be 0", 0, exp.num);
         Assert.assertNull("let->right->varName must be null", exp.varName);
-        Node num = exp.right;
+        Node num = exp.left;
         Assert.assertNull("let->right->left->left must be null", num.left);
         Assert.assertNull("let->right->left->right must be null", num.right);
         Assert.assertTrue("let->right->left must be ExpNode", (num instanceof NumNode));
