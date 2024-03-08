@@ -265,6 +265,7 @@ public class ParserTest {
 
         Node numNode3 = new NumNode();
         numNode3.num = 3;
+        expNodeParan.left = numNode3;
 
         Node expNode2 = new ExpNode();
         Node expNode3 = new ExpNode();
