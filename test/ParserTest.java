@@ -1,6 +1,7 @@
 package test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Assert;
@@ -13,6 +14,7 @@ import com.chen.mint.Nodes.ExpNode;
 import com.chen.mint.Nodes.LetNode;
 import com.chen.mint.Nodes.Node;
 import com.chen.mint.Nodes.NumNode;
+import com.chen.mint.Nodes.OpNode;
 import com.chen.mint.Nodes.VarNode;
 import com.chen.mint.Nodes.ViewNode;
 
@@ -66,7 +68,6 @@ public class ParserTest {
         Node let = Parser.parse(input);
 
         //VERIFY
-        //VERIFY
         //                LetNode
         //               /       \
         //       VarNode(x)      ExpNode
@@ -97,63 +98,97 @@ public class ParserTest {
         Assert.assertNull("let->right->left->varName must be null", num.varName);
     }
 
-    // @Test
-    // public void testParseLet() {
-    //     //SETUP
-    //     //input = "let x = (3 * (x + y))";
-    //     List<Token> input = new ArrayList<Token>();
-    //     input.add(new Token(TokenType.LET));
-    //     input.add(new Token(TokenType.VAR, "x"));
-    //     input.add(new Token(TokenType.EQUAL));
-    //     input.add(new Token(TokenType.NUM, 3));
+    @Test
+    public void testParseLet() {
+        //SETUP
+        //input = "let x = (3 * (x + y))";
+        List<Token> input = Arrays.asList(new Token[] {
+            new Token(TokenType.LET),
+            new Token(TokenType.VAR, "x"),
+            new Token(TokenType.EQUAL),
+            new Token(TokenType.LEFT_PARAN),
+            new Token(TokenType.NUM, 3),
+            new Token(TokenType.STAR),
+            new Token(TokenType.LEFT_PARAN),
+            new Token(TokenType.VAR, "x"),
+            new Token(TokenType.PLUS),
+            new Token(TokenType.VAR, "y"),
+            new Token(TokenType.RIGHT_PARAN),
+            new Token(TokenType.RIGHT_PARAN)
+        });
 
-    //     //expected node setup
-    //     Node root = new LetNode();
-    //     Node var = new VarNode();
-    //     var.varName = "x";
-    //     root.left = var;
-    //     Node exp = new ExpNode();
-    //     exp.num = 3;
-    //     root.right = exp;
+        //expected node setup
+        //                          LetNode
+        //                          /       \
+        //                  VarNode(x)       ExpNode(paran)
+        //                                  /
+        //                              OpNode(*)
+        //                             /         \
+        //                      ExpNode           ExpNode(paran)
+        //                     /                 /
+        //              NumNode(3)           OpNode(+)
+        //                                  /         \
+        //                           ExpNode           ExpNode
+        //                          /                 /
+        //                      VarNode(x)        VarNode(y)
+        //
+        Node expected = new LetNode();
+        Node var = new VarNode();
+        var.varName = "x";
+        expected.left = var;
+        Node exp = new ExpNode();
+        expected.right = exp;
+        Node opNodeStar = new OpNode();
+        opNodeStar.type = TokenType.STAR;
+        exp.left = opNodeStar;
+        Node expNode1 = new ExpNode();
+        Node numNode3 = new NumNode();
+        numNode3.num = 3;
+        expNode1.left = numNode3;
+        Node expNodeParan = new ExpNode();
+        opNodeStar.right = expNodeParan;
+        Node opNodePlus = new OpNode();
+        opNodePlus.type = TokenType.PLUS;
+        expNodeParan.left = opNodePlus;
+        Node expNode2 = new ExpNode();
+        Node expNode3 = new ExpNode();
+        Node varNodeX = new VarNode();
+        varNodeX.varName = "x";
+        Node varNodeY = new VarNode();
+        varNodeY.varName = "y";
+        opNodePlus.left = expNode2;
+        opNodePlus.right = expNode3;
+        expNode2.left = varNodeX;
+        expNode3.left = varNodeY;
 
-    //     //TEST
-    //     Node let = Parser.parse(input);
+        //TEST
+        Node let = Parser.parse(input);
 
-    //     //VERIFY
-    //     nodeCompare(root, let, "root");
-    //     Assert.assertNotNull("let must not be null", let);
-    //     Assert.assertTrue("let must be ViewNode", (let instanceof LetNode));
-    //     Assert.assertNotNull("let->left must not be null", let.left);
-    //     Assert.assertNotNull("let->right must not be null", let.right);
-    //     Node var = let.left;
-    //     Assert.assertNull("let->left->left must be null", var.left);
-    //     Assert.assertNull("let->left->right must be null", var.right);
-    //     Assert.assertTrue("let->left must be VarNode", (var instanceof VarNode));
-    //     Assert.assertEquals("let->left->num must be 0", 0, var.num);
-    //     Assert.assertEquals("let->left->varName must be x", "x", var.varName);
-    //     Node exp = let.right;
-    //     Assert.assertNull("let->left->left must be null", exp.left);
-    //     Assert.assertNull("let->left->right must be null", exp.right);
-    //     Assert.assertTrue("let->left must be ExpNode", (exp instanceof ExpNode));
-    //     Assert.assertEquals("let->left->num must be 3", 3, exp.num);
-    //     Assert.assertNull("let->left->varName must be null", exp.varName);
-    // }
+        //VERIFY
+        nodeCompare(expected, let, "root");
+    }
 
-    // private String nodeCompare(Node expected, Node actual, String progress) {
-    //     if (expected == null) {
-    //         Assert.assertNull(progress + " must be null", actual);
-    //     } else if (expected instanceof LetNode) {
-    //         Assert.assertTrue(progress + " must be LetNode", (expected instanceof LetNode));
-    //     } else if (expected instanceof ViewNode) {
-    //         Assert.assertTrue(progress + " must be ViewNode", (expected instanceof ViewNode));
-    //     } else if (expected instanceof ExpNode) {
-    //         Assert.assertTrue(progress + " must be ExpNode", (expected instanceof ExpNode));
-    //     } else if (expected instanceof VarNode) {
-    //         Assert.assertTrue(progress + " must be VarNode", (expected instanceof VarNode));
-    //     } else if (expected instanceof LetNode) {
-    //         Assert.assertTrue(progress + " must be LetNode", (expected instanceof LetNode));
-    //     } else if (expected instanceof LetNode) {
-    //         Assert.assertTrue(progress + " must be LetNode", (expected instanceof LetNode));
-    //     }
-    // }
+    private void nodeCompare(Node expected, Node actual, String progress) {
+        if (expected == null) {
+            Assert.assertNull(progress + " must be null", actual);
+            return;
+        } else if (expected instanceof LetNode) {
+            Assert.assertTrue(progress + " must be LetNode", (actual instanceof LetNode));
+        } else if (expected instanceof ViewNode) {
+            Assert.assertTrue(progress + " must be ViewNode", (actual instanceof ViewNode));
+        } else if (expected instanceof ExpNode) {
+            Assert.assertTrue(progress + " must be ExpNode", (actual instanceof ExpNode));
+        } else if (expected instanceof VarNode) {
+            Assert.assertTrue(progress + " must be VarNode", (actual instanceof VarNode));
+            Assert.assertEquals(progress + ".varName must equal", expected.varName, actual.varName);
+        } else if (expected instanceof NumNode) {
+            Assert.assertTrue(progress + " must be NumNode", (actual instanceof NumNode));
+            Assert.assertEquals(progress + ".num must equal", expected.num, actual.num);
+        } else if (expected instanceof OpNode) {
+            Assert.assertTrue(progress + " must be OpNode", (actual instanceof OpNode));
+            Assert.assertEquals(progress + ".type must equal", expected.type, actual.type);
+        }
+        nodeCompare(expected.left, actual.left, progress + ".left");
+        nodeCompare(expected.right, actual.right, progress + ".right");
+    }
 }
