@@ -20,7 +20,6 @@ public class ExpNode extends Node{
                 VarNode newVar = new VarNode(input);
                 this.left = newVar;
             }
-            input.remove(0);
         }
 
         // Case 2: OP or ()
