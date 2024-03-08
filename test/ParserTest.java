@@ -102,20 +102,35 @@ public class ParserTest {
     public void testParseLet() {
         //SETUP
         //input = "let x = (3 * (x + y))";
-        List<Token> input = Arrays.asList(new Token[] {
-            new Token(TokenType.LET),
-            new Token(TokenType.VAR, "x"),
-            new Token(TokenType.EQUAL),
-            new Token(TokenType.LEFT_PARAN),
-            new Token(TokenType.NUM, 3),
-            new Token(TokenType.STAR),
-            new Token(TokenType.LEFT_PARAN),
-            new Token(TokenType.VAR, "x"),
-            new Token(TokenType.PLUS),
-            new Token(TokenType.VAR, "y"),
-            new Token(TokenType.RIGHT_PARAN),
-            new Token(TokenType.RIGHT_PARAN)
-        });
+
+        // List<Token> input = Arrays.asList(new Token[] {
+        //     new Token(TokenType.LET),
+        //     new Token(TokenType.VAR, "x"),
+        //     new Token(TokenType.EQUAL),
+        //     new Token(TokenType.LEFT_PARAN),
+        //     new Token(TokenType.NUM, 3),
+        //     new Token(TokenType.STAR),
+        //     new Token(TokenType.LEFT_PARAN),
+        //     new Token(TokenType.VAR, "x"),
+        //     new Token(TokenType.PLUS),
+        //     new Token(TokenType.VAR, "y"),
+        //     new Token(TokenType.RIGHT_PARAN),
+        //     new Token(TokenType.RIGHT_PARAN)
+        // });
+
+        List<Token> input = new ArrayList<Token>();
+        input.add(new Token(TokenType.LET));
+        input.add(new Token(TokenType.VAR, "x"));
+        input.add(new Token(TokenType.EQUAL));
+        input.add(new Token(TokenType.LEFT_PARAN));
+        input.add(new Token(TokenType.NUM, 3));
+        input.add(new Token(TokenType.STAR));
+        input.add(new Token(TokenType.LEFT_PARAN));
+        input.add(new Token(TokenType.VAR, "x"));
+        input.add(new Token(TokenType.PLUS));
+        input.add(new Token(TokenType.VAR, "y"));
+        input.add(new Token(TokenType.RIGHT_PARAN));
+        input.add(new Token(TokenType.RIGHT_PARAN));
 
         //expected node setup
         //                          LetNode
@@ -147,6 +162,7 @@ public class ParserTest {
         expNode1.left = numNode3;
         Node expNodeParan = new ExpNode();
         opNodeStar.right = expNodeParan;
+        opNodeStar.left = expNode1;
         Node opNodePlus = new OpNode();
         opNodePlus.type = TokenType.PLUS;
         expNodeParan.left = opNodePlus;
@@ -191,4 +207,77 @@ public class ParserTest {
         nodeCompare(expected.left, actual.left, progress + ".left");
         nodeCompare(expected.right, actual.right, progress + ".right");
     }
+
+    @Test
+    public void testParseLet2() {
+    //SETUP
+        //input = "let x = ((x + y) * 3)";
+
+        List<Token> input = new ArrayList<Token>();
+        input.add(new Token(TokenType.LET));
+        input.add(new Token(TokenType.VAR, "x"));
+        input.add(new Token(TokenType.EQUAL));
+        input.add(new Token(TokenType.LEFT_PARAN));
+        input.add(new Token(TokenType.LEFT_PARAN));
+        input.add(new Token(TokenType.VAR, "x"));
+        input.add(new Token(TokenType.PLUS));
+        input.add(new Token(TokenType.VAR, "y"));
+        input.add(new Token(TokenType.RIGHT_PARAN));
+        input.add(new Token(TokenType.STAR));
+        input.add(new Token(TokenType.NUM, 3));
+        input.add(new Token(TokenType.RIGHT_PARAN));
+
+        //expected node setup
+        //                          LetNode
+        //                          /       \
+        //                  VarNode(x)       ExpNode(paran)
+        //                                  /
+        //                              OpNode(*)
+        //                             /         \
+        //                 ExpNode(paran)       ExpNode(paran)
+        //                     /                 /
+        //              OpNode(+)           NumNode(3)
+        //             /       \        
+        //      ExpNode     ExpNode    
+        //       /             \     
+        //   VarNode(x)     VarNode(y)    
+        //
+        Node expected = new LetNode();
+        Node var = new VarNode();
+        var.varName = "x";
+        expected.left = var;
+        Node exp = new ExpNode();
+        expected.right = exp;
+        Node opNodeStar = new OpNode();
+        opNodeStar.type = TokenType.STAR;
+        exp.left = opNodeStar;
+        Node expNode1 = new ExpNode();
+        Node numNode3 = new NumNode();
+        numNode3.num = 3;
+        expNode1.left = numNode3;
+        Node expNodeParan = new ExpNode();
+        opNodeStar.right = expNodeParan;
+        opNodeStar.left = expNode1;
+        Node opNodePlus = new OpNode();
+        opNodePlus.type = TokenType.PLUS;
+        expNodeParan.left = opNodePlus;
+        Node expNode2 = new ExpNode();
+        Node expNode3 = new ExpNode();
+        Node varNodeX = new VarNode();
+        varNodeX.varName = "x";
+        Node varNodeY = new VarNode();
+        varNodeY.varName = "y";
+        opNodePlus.left = expNode2;
+        opNodePlus.right = expNode3;
+        expNode2.left = varNodeX;
+        expNode3.left = varNodeY;
+
+        //TEST
+        Node let = Parser.parse(input);
+
+        //VERIFY
+        nodeCompare(expected, let, "root");
+    }
+
 }
+

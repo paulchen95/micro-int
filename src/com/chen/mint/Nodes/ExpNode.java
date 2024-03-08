@@ -44,7 +44,7 @@ public class ExpNode extends Node{
                     else if(input.get(i).type.equals(TokenType.RIGHT_PARAN) && another == 0){
                         input.remove(i);
                         input.remove(0);
-                        this.left = new ExpNode(input.subList(0, i-1));
+                        this.left = new OpNode(input.subList(0, i-1));
                         break;
                     }
                     i++;
