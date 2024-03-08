@@ -8,10 +8,10 @@ import com.chen.mint.TokenType;
 
 
 public class Node {
-    String varName;
-    int num;
-    Node left;
-    Node right;
-    TokenType type;
+    public String varName;
+    public int num;
+    public Node left;
+    public Node right;
+    public TokenType type;
 
 }
