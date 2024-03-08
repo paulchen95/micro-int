@@ -246,29 +246,36 @@ public class ParserTest {
         Node var = new VarNode();
         var.varName = "x";
         expected.left = var;
+
         Node exp = new ExpNode();
         expected.right = exp;
+
         Node opNodeStar = new OpNode();
         opNodeStar.type = TokenType.STAR;
         exp.left = opNodeStar;
+
         Node expNode1 = new ExpNode();
-        Node numNode3 = new NumNode();
-        numNode3.num = 3;
-        expNode1.left = numNode3;
         Node expNodeParan = new ExpNode();
         opNodeStar.right = expNodeParan;
         opNodeStar.left = expNode1;
+
         Node opNodePlus = new OpNode();
         opNodePlus.type = TokenType.PLUS;
-        expNodeParan.left = opNodePlus;
+        expNode1.left = opNodePlus;
+
+        Node numNode3 = new NumNode();
+        numNode3.num = 3;
+
         Node expNode2 = new ExpNode();
         Node expNode3 = new ExpNode();
+        opNodePlus.left = expNode2;
+        opNodePlus.right = expNode3;
+
         Node varNodeX = new VarNode();
         varNodeX.varName = "x";
         Node varNodeY = new VarNode();
         varNodeY.varName = "y";
-        opNodePlus.left = expNode2;
-        opNodePlus.right = expNode3;
+
         expNode2.left = varNodeX;
         expNode3.left = varNodeY;
 

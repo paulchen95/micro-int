@@ -49,7 +49,6 @@ public class ExpNode extends Node{
                     }
                     i++;
                 }
-
             }
             // Case 2b: OP with VAR or NUM
             else if(input.get(1).type.equals(TokenType.STAR) || input.get(1).type.equals(TokenType.PLUS)){
