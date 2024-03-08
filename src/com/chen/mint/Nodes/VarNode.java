@@ -8,6 +8,7 @@ import com.chen.mint.TokenType;
 // Leaf Class
 public class VarNode extends Node {
     
+    public VarNode(){}
     // Leaf Class
     public VarNode(List<Token> input){
         if(input.get(0).type.equals(TokenType.VAR)){

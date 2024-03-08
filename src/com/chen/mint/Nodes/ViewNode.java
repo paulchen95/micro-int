@@ -7,6 +7,8 @@ import com.chen.mint.TokenType;
 
 public class ViewNode extends Node{
     
+    public ViewNode(){}
+    
     public ViewNode(List<Token> input){
         if(input.get(0).type.equals(TokenType.VIEW)){
             input.remove(0);
