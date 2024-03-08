@@ -13,6 +13,7 @@ import com.chen.mint.Nodes.ExpNode;
 import com.chen.mint.Nodes.LetNode;
 import com.chen.mint.Nodes.Node;
 import com.chen.mint.Nodes.NumNode;
+import com.chen.mint.Nodes.OpNode;
 import com.chen.mint.Nodes.VarNode;
 import com.chen.mint.Nodes.ViewNode;
 
@@ -96,8 +97,67 @@ public class ParserTest {
         Assert.assertEquals("let->right->left->num must be 3", 3, num.num);
         Assert.assertNull("let->right->left->varName must be null", num.varName);
     }
-
-    // @Test
+//
+    //@Test
+    //public void testParseLetWithOp() {
+    //    //SETUP
+    //    //input = "let z = 3 + 7";
+    //    List<Token> input = new ArrayList<Token>();
+    //    input.add(new Token(TokenType.LET));
+    //    input.add(new Token(TokenType.VAR, "z"));
+    //    input.add(new Token(TokenType.EQUAL));
+    //    input.add(new Token(TokenType.NUM, 3));
+    //    input.add(new Token(TokenType.PLUS));
+    //    input.add(new Token(TokenType.NUM, 7));
+//
+    //    Node letWithOp = Parser.parse(input);
+//
+    //    //VERIFY
+    //    //VERIFY
+    //    //                LetNode
+    //    //               /       \
+    //    //       VarNode(z)      ExpNode
+    //    //                      /
+    //    //                   OpNode(+)
+    //    //                  /    \
+    //    //         NumNode(3)   NumNode(7)
+//
+    //    Assert.assertNotNull("letWithOp must not be null", letWithOp);
+    //    Assert.assertTrue("letWithOp must be LetNode", (letWithOp instanceof LetNode));
+    //    Assert.assertNotNull("letWithOp->left must not be null", letWithOp.left);
+    //    Assert.assertNotNull("letWithOp->right must not be null", letWithOp.right);
+    //    Node var = letWithOp.left;
+    //    Assert.assertNull("letWithOp->left->left must be null", var.left);
+    //    Assert.assertNull("letWithOp->left->right must be null", var.right);
+    //    Assert.assertTrue("letWithOp->left must be VarNode", (var instanceof VarNode));
+    //    Assert.assertEquals("letWithOp->left->num must be 0", 0, var.num);
+    //    Assert.assertEquals("letWithOp->left->varName must be z", "z", var.varName);
+    //    Node exp = letWithOp.right;
+    //    Assert.assertNotNull("letWithOp->right->left must not be null", exp.left);
+    //    Assert.assertNull("letWithOp->right->right must be null", exp.right);
+    //    Assert.assertTrue("letWithOp->right must be ExpNode", (exp instanceof ExpNode));
+    //    Assert.assertEquals("letWithOp->right->num must be 0", 0, exp.num);
+    //    Assert.assertNull("letWithOp->right->varName must be null", exp.varName);
+    //    Node op = exp.left;
+    //    Assert.assertNotNull("letWithOp->right->left->left must not be null", op.left);
+    //    Assert.assertNotNull("letWithOp->right->left->right must not be null", op.right);
+    //    Assert.assertTrue("letWithOp->right->left must be OpNode", (op instanceof OpNode));
+    //    Assert.assertEquals("letWithOp->right->left->TokenType must be PLUS", TokenType.PLUS, op.type);
+    //    Assert.assertEquals("letWithOp->right->left->num must be 0", 0, op.num);
+    //    Assert.assertNull("letWithOp->right->left->varName must be null", op.varName);
+    //    Node num3 = op.left;
+    //    Assert.assertNull("letWithOp->right->left->left->left must be null", num3.left);
+    //    Assert.assertNull("letWithOp->right->left->left->right must be null", num3.right);
+    //    Assert.assertTrue("letWithOp->right->left->left must be NumNode", (op instanceof NumNode));
+    //    Assert.assertEquals("letWithOp->right->left->left->num must be 3", 3, num3.num);
+    //    Node num7 = op.right;
+    //    Assert.assertNull("letWithOp->right->left->right->left must be null", num7.left);
+    //    Assert.assertNull("letWithOp->right->left->right->right must be null", num7.right);
+    //    Assert.assertTrue("letWithOp->right->left->right must be NumNode", (op instanceof NumNode));
+    //    Assert.assertEquals("letWithOp->right->left->right->num must be 7", 7, num7.num);
+//
+    //}
+    //// @Test
     // public void testParseLet() {
     //     //SETUP
     //     //input = "let x = (3 * (x + y))";

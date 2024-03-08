@@ -9,7 +9,7 @@ import com.chen.mint.TokenType;
 public class LetNode extends Node {
 
     public LetNode(){}
-    
+
     // Always left child is VarNode and right is ExpNode
     public LetNode(List<Token> input){
         if(input.get(0).type.equals(TokenType.LET) && input.get(1).type.equals(TokenType.VAR)){
