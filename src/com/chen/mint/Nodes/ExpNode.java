@@ -2,7 +2,6 @@ package com.chen.mint.Nodes;
 
 import java.util.List;
 
-import com.chen.mint.NodeType;
 import com.chen.mint.Token;
 import com.chen.mint.TokenType;
 
