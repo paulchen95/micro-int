@@ -44,7 +44,16 @@ public class ExpNode extends Node{
                     else if(input.get(i).type.equals(TokenType.RIGHT_PARAN) && another == 0){
                         input.remove(i);
                         input.remove(0);
-                        this.left = new OpNode(input.subList(0, i-1));
+                        List<Token> newList = input.subList(0, i-1);
+                        if (isOpNode(newList)) {
+                            this.left = new OpNode(newList);
+                        } else {
+                            //make a new Exp Node
+                            ExpNode newExp = new ExpNode(newList);
+                            //clone back to this one
+                            this.left = newExp.left;
+                            this.right = newExp.right;
+                        }
                         break;
                     }
                     i++;
@@ -56,5 +65,26 @@ public class ExpNode extends Node{
             }
 
         }
+    }
+
+    private boolean isOpNode(List<Token> input) {
+        int nestedParan = 0;        // Tracks multiple left parans
+        int i = 0;              // Tracks paran length
+        while(i < input.size()){
+            // Nested Left paran
+            if(input.get(i).type.equals(TokenType.LEFT_PARAN)){
+                nestedParan++;
+            }
+            // Right paran belonging to nested paran
+            else if(input.get(i).type.equals(TokenType.RIGHT_PARAN)){
+                nestedParan--;
+            }
+            if((nestedParan==0) && 
+               (input.get(i).type.equals(TokenType.STAR) || input.get(i).type.equals(TokenType.PLUS))) {
+                return true;
+            }
+            i++;
+        }
+        return false;
     }
 }
