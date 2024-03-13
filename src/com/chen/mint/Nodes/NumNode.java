@@ -21,4 +21,9 @@ public class NumNode extends Node {
             System.out.println("NumNode creation failed: Expected NUM Token from first element in input");
         }
     }
+
+    @Override
+    public void eval() {
+
+    }
 }

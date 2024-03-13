@@ -61,4 +61,16 @@ public class OpNode extends Node{
         }
 
     }
+
+    @Override
+    public void eval() {
+        this.left.eval();
+        this.right.eval();
+        if(type.equals(TokenType.STAR)){
+            this.num = this.left.num * this.right.num;
+        }
+        else if(type.equals(TokenType.PLUS)){
+            this.num = this.left.num + this.right.num;
+        }
+    }
 }

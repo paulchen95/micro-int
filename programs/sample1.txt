@@ -1,2 +1,7 @@
-int x = 3 + 5
-view x
+let a = 2
+let b = 55
+view a
+view b + a
+let apple = (16*a) + (15*b)
+let apple = apple + 1
+view apple
