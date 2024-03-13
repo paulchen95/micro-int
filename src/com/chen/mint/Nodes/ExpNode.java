@@ -24,6 +24,9 @@ public class ExpNode extends Node{
             }
         }
 
+        else if(isOpNode(input)){
+            this.left = new OpNode(input);
+        }
         // Case 2: OP or ()
         else{
 

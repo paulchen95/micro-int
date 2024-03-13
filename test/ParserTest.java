@@ -387,9 +387,11 @@ public class ParserTest {
         input.add(new Token(TokenType.RIGHT_PARAN));
 
         //expected node setup
-        //                          LetNode
-        //                          /       \
-        //             VarNode(apple)       OpNode(+)
+        //                             LetNode
+        //                            /       \
+        //              VarNode(apple)        ExpNode
+        //                                   /
+        //                                  OpNode(+)
         //                                 /         \
         //                          ExpNode           ExpNode
         //                         /                 /
@@ -400,14 +402,15 @@ public class ParserTest {
         //  NumNode(16)    VarNode(a)     NumNode(15)    VarNode(b)
         //
         Node expected = new LetNode();
+        Node firstExp = new ExpNode();
         Node var1 = new VarNode();
         var1.varName = "apple";
         Node opNodePlus = new OpNode();
         opNodePlus.type = TokenType.PLUS;
         Node opNodeStar1 = new OpNode();
-        opNodePlus.type = TokenType.STAR;
+        opNodeStar1.type = TokenType.STAR;
         Node opNodeStar2 = new OpNode();
-        opNodePlus.type = TokenType.STAR;
+        opNodeStar2.type = TokenType.STAR;
         Node exp1 = new ExpNode();
         Node exp2 = new ExpNode();
         Node exp3 = new ExpNode();
@@ -421,10 +424,11 @@ public class ParserTest {
         Node numNode1 = new NumNode();
         numNode1.num = 16;
         Node numNode2 = new NumNode();
-        numNode1.num = 15;
+        numNode2.num = 15;
 
         expected.left = var1;
-        expected.right = opNodePlus;
+        expected.right = firstExp;
+        firstExp.left = opNodePlus;
         opNodePlus.left = exp1;
         opNodePlus.right = exp2;
         exp1.left = opNodeStar1;
@@ -435,8 +439,8 @@ public class ParserTest {
         opNodeStar2.right = exp6;
         exp3.left = numNode1;
         exp4.left = varA;
-        exp3.left = numNode2;
-        exp4.left = varB;
+        exp5.left = numNode2;
+        exp6.left = varB;
 
         //TEST
         Node let = Parser.parse(input);
