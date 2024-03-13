@@ -23,5 +23,6 @@ public class VarStore {
 
     public int get(String var) {
         return store.get(var);
+
     }
 }

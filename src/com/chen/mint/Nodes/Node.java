@@ -10,4 +10,5 @@ public abstract class Node {
     public TokenType type;
 
     public abstract void eval();
+
 }
