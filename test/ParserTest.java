@@ -287,5 +287,162 @@ public class ParserTest {
         nodeCompare(expected, let, "root");
     }
 
+    @Test
+    public void testParseParans() {
+    //SETUP
+        //input = "let x = (y)";
+
+        List<Token> input = new ArrayList<Token>();
+        input.add(new Token(TokenType.LET));
+        input.add(new Token(TokenType.VAR, "x"));
+        input.add(new Token(TokenType.EQUAL));
+        input.add(new Token(TokenType.LEFT_PARAN));
+        input.add(new Token(TokenType.VAR, "y"));
+        input.add(new Token(TokenType.RIGHT_PARAN));
+
+        //expected node setup
+        //                          LetNode
+        //                          /       \
+        //                  VarNode(x)       ExpNode(paran)
+        //                                  /
+        //                              VarNode(x)
+        //
+        Node expected = new LetNode();
+        Node var1 = new VarNode();
+        var1.varName = "x";
+        Node exp = new ExpNode();
+        Node var2 = new VarNode();
+        var2.varName = "y";
+
+        expected.left = var1;
+        expected.right = exp;
+        exp.left = var2;
+
+        //TEST
+        Node let = Parser.parse(input);
+
+        //VERIFY
+        nodeCompare(expected, let, "root");
+    }
+
+    @Test
+    public void testParseNestedParans() {
+    //SETUP
+        //input = "let x = ((y))";
+
+        List<Token> input = new ArrayList<Token>();
+        input.add(new Token(TokenType.LET));
+        input.add(new Token(TokenType.VAR, "x"));
+        input.add(new Token(TokenType.EQUAL));
+        input.add(new Token(TokenType.LEFT_PARAN));
+        input.add(new Token(TokenType.LEFT_PARAN));
+        input.add(new Token(TokenType.VAR, "y"));
+        input.add(new Token(TokenType.RIGHT_PARAN));
+        input.add(new Token(TokenType.RIGHT_PARAN));
+
+        //expected node setup
+        //                          LetNode
+        //                          /       \
+        //                  VarNode(x)       ExpNode(paran)
+        //                                  /
+        //                              VarNode(x)
+        //
+        Node expected = new LetNode();
+        Node var1 = new VarNode();
+        var1.varName = "x";
+        Node exp = new ExpNode();
+        Node var2 = new VarNode();
+        var2.varName = "y";
+
+        expected.left = var1;
+        expected.right = exp;
+        exp.left = var2;
+
+        //TEST
+        Node let = Parser.parse(input);
+
+        //VERIFY
+        nodeCompare(expected, let, "root");
+    }
+
+    @Test
+    public void testParseComplex() {
+    //SETUP
+        //input = "let apple = (16 * a) + (15 * b)";
+
+        List<Token> input = new ArrayList<Token>();
+        input.add(new Token(TokenType.LET));
+        input.add(new Token(TokenType.VAR, "apple"));
+        input.add(new Token(TokenType.EQUAL));
+        input.add(new Token(TokenType.LEFT_PARAN));
+        input.add(new Token(TokenType.NUM, 16));
+        input.add(new Token(TokenType.STAR));
+        input.add(new Token(TokenType.VAR, "a"));
+        input.add(new Token(TokenType.RIGHT_PARAN));
+        input.add(new Token(TokenType.PLUS));
+        input.add(new Token(TokenType.LEFT_PARAN));
+        input.add(new Token(TokenType.NUM, 15));
+        input.add(new Token(TokenType.STAR));
+        input.add(new Token(TokenType.VAR, "b"));
+        input.add(new Token(TokenType.RIGHT_PARAN));
+
+        //expected node setup
+        //                          LetNode
+        //                          /       \
+        //             VarNode(apple)       OpNode(+)
+        //                                 /         \
+        //                          ExpNode           ExpNode
+        //                         /                 /
+        //                OpNode(*)               OpNode(*)
+        //               /         \             /         \
+        //          ExpNode     ExpNode      ExpNode        ExpNode
+        //          /           /            /             /
+        //  NumNode(16)    VarNode(a)     NumNode(15)    VarNode(b)
+        //
+        Node expected = new LetNode();
+        Node var1 = new VarNode();
+        var1.varName = "apple";
+        Node opNodePlus = new OpNode();
+        opNodePlus.type = TokenType.PLUS;
+        Node opNodeStar1 = new OpNode();
+        opNodePlus.type = TokenType.STAR;
+        Node opNodeStar2 = new OpNode();
+        opNodePlus.type = TokenType.STAR;
+        Node exp1 = new ExpNode();
+        Node exp2 = new ExpNode();
+        Node exp3 = new ExpNode();
+        Node exp4 = new ExpNode();
+        Node exp5 = new ExpNode();
+        Node exp6 = new ExpNode();
+        Node varA = new VarNode();
+        varA.varName = "a";
+        Node varB = new VarNode();
+        varB.varName = "b";
+        Node numNode1 = new NumNode();
+        numNode1.num = 16;
+        Node numNode2 = new NumNode();
+        numNode1.num = 15;
+
+        expected.left = var1;
+        expected.right = opNodePlus;
+        opNodePlus.left = exp1;
+        opNodePlus.right = exp2;
+        exp1.left = opNodeStar1;
+        exp2.left = opNodeStar2;
+        opNodeStar1.left = exp3;
+        opNodeStar1.right = exp4;
+        opNodeStar2.left = exp5;
+        opNodeStar2.right = exp6;
+        exp3.left = numNode1;
+        exp4.left = varA;
+        exp3.left = numNode2;
+        exp4.left = varB;
+
+        //TEST
+        Node let = Parser.parse(input);
+
+        //VERIFY
+        nodeCompare(expected, let, "root");
+    }
 }
 
