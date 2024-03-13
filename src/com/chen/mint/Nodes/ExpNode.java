@@ -8,7 +8,12 @@ import com.chen.mint.TokenType;
 public class ExpNode extends Node{
     
     public ExpNode(){}
-
+    
+    @Override
+    public void eval(){
+        this.left.eval();
+        this.num = this.left.num;
+    }
     // Assuming whole input is EXP
     public ExpNode(List<Token> input) {
         // Case 1: NUM or Var

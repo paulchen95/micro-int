@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.chen.mint.Token;
 import com.chen.mint.TokenType;
+import com.chen.mint.VarStore;
 
 public class LetNode extends Node {
 
@@ -18,5 +19,11 @@ public class LetNode extends Node {
             this.right = new ExpNode(input);
         }
 
+    }
+
+    @Override
+    public void eval() {
+        this.right.eval();
+        VarStore.getInstance().put(this.left.varName, this.right.num);
     }
 }

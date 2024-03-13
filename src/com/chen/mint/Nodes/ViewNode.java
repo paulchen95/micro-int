@@ -15,4 +15,10 @@ public class ViewNode extends Node{
             this.left = new ExpNode(input);
         }
     }
+
+    @Override
+    public void eval() {
+        this.left.eval();
+        System.out.println(this.left.num);
+    }
 }

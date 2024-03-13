@@ -9,5 +9,6 @@ public abstract class Node {
     public Node right;
     public TokenType type;
 
-    //public abstract void eval();
+    public abstract void eval();
+
 }

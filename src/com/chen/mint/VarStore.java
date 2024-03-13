@@ -21,7 +21,8 @@ public class VarStore {
         store.put(var, num);
     }
 
-    public void get(String var) {
-        store.get(var);
+    public int get(String var) {
+        return store.get(var);
+
     }
 }
