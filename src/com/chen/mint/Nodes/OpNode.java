@@ -27,7 +27,9 @@ public class OpNode extends Node{
                 }
                 // Sublist paran portion to new ExpNode
                 else if(input.get(i).type.equals(TokenType.RIGHT_PARAN) && another == 0){
-                    this.left = new ExpNode(input.subList(0, i+1));
+                    input.remove(i);
+                    input.remove(0);
+                    this.left = new ExpNode(input.subList(0, i-1));
                     break;
                 }
                 i++;
