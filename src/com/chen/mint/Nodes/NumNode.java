@@ -24,6 +24,5 @@ public class NumNode extends Node {
 
     @Override
     public void eval() {
-
     }
 }
